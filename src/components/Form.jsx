@@ -1,5 +1,22 @@
+import {useState} from "react";
 
 const Form = () => {
+
+    const [patient, setPatient] = useState({
+        mascota : "",
+        propietario : "",
+        contacto : "",
+        alta : "",
+        sintomas : ""
+    })
+    const handleChange = (e) => {
+
+      const {name, value} = e.target;
+        console.log(e.target)
+        console.log(name)
+        console.log(value)
+        setPatient(Object.assign({}, patient,{[name] : value}))
+    }
     return (
         <div className="md:w-1/2 lg:w-2/5">
             <h2 className="font-black text-3xl text-center">Seguiento pacientes</h2>
@@ -15,9 +32,12 @@ const Form = () => {
                     </label>
                     <input
                         id="mascota"
+                        name="mascota"
                         type="text"
                         placeholder="Nombre de la mascota"
                         className="border-2 w-full p-2 placeholder-gray-400 rounded-md"
+                        value={patient.mascota}
+                        onChange={ e =>handleChange(e)}
                     />
 
                 </div>
@@ -29,9 +49,12 @@ const Form = () => {
                     </label>
                     <input
                         id="propietario"
+                        name="propietario"
                         type="text"
                         placeholder="Nombre del propietario"
                         className="border-2 w-full p-2 placeholder-gray-400 rounded-md"
+                        value={patient.propietario}
+                        onChange={e => handleChange(e)}
                     />
 
                 </div>
@@ -43,9 +66,12 @@ const Form = () => {
                     </label>
                     <input
                         id="contacto"
+                        name="contacto"
                         type="email"
                         placeholder="Email contacto propietario "
                         className="border-2 w-full p-2 placeholder-gray-400 rounded-md"
+                        value={patient.contacto}
+                        onChange={e => handleChange(e)}
                     />
 
                 </div>
@@ -57,8 +83,11 @@ const Form = () => {
                     </label>
                     <input
                         id="alta"
+                        name="alta"
                         type="date"
                         className="border-2 w-full p-2 placeholder-gray-400 rounded-md"
+                        value={patient.alta}
+                        onChange={ e => handleChange(e)}
                     />
 
                 </div>
@@ -70,8 +99,10 @@ const Form = () => {
                     </label>
                     <textarea
                         id="sintomas"
+                        name="sintomas"
                         placeholder="Sintomas"
                         className="border-2 w-full p-2 placeholder-gray-400 rounded-md"
+                        onChange={e => handleChange(e)}
                     />
 
                 </div>
