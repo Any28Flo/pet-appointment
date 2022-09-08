@@ -9,10 +9,8 @@ function App() {
     <div className="App">
      <div className="container mx-auto">
          <Header/>
-         <div className="columns-12 columns-lg-61">
+         <div className="mt-5 md:flex ">
              <Form/>
-         </div>
-         <div className="columns-3 columns-3lg">
              <ListPatients/>
          </div>
      </div>
