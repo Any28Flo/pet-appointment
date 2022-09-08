@@ -1,21 +1,37 @@
 import {useState} from "react";
 
+const initState ={
+    mascota : "",
+    propietario : "",
+    contacto : "",
+    alta : "",
+    sintomas : ""
+
+};
 const Form = () => {
 
-    const [patient, setPatient] = useState({
-        mascota : "",
-        propietario : "",
-        contacto : "",
-        alta : "",
-        sintomas : ""
-    })
-    const handleChange = (e) => {
+    const [patient, setPatient] = useState(initState);
+    const [error,setError] = useState(false);
 
+    const handleChange = (e) => {
       const {name, value} = e.target;
-        console.log(e.target)
-        console.log(name)
-        console.log(value)
         setPatient(Object.assign({}, patient,{[name] : value}))
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if( patient.mascota === "" || patient.propietario === "" || patient.contacto === "" || patient.alta ==="" || patient.sintomas === "" ){
+            setError(true);
+            console.log(error)
+            return
+        }
+            setError(false)
+            localStorage.setItem('patient', JSON.stringify(patient));
+            setPatient(initState);
+
+
+
+
+
     }
     return (
         <div className="md:w-1/2 lg:w-2/5">
@@ -23,7 +39,16 @@ const Form = () => {
             <p className="text-lg mt-5 text-center mb-10">Añade Pacientes y {" "}
             <span className="text-indigo-600 font-bold">Administralos</span>
             </p>
-            <form className="bg-white shadow-md rounded-lg py-10 px-5 text-left">
+            <form className="bg-white shadow-md rounded-lg py-10 px-5 text-left"
+                  onSubmit={handleSubmit}
+            >
+                {
+                    error && (
+                        <div className="bg-red-800 text-white text-center p-3 uppercase font-bold mb-3 rounded-md">
+                            <p>Todos los campos son obligatorios</p>
+                        </div>
+                    )
+                }
                 <div className="mb-5">
                     <label htmlFor="mascota"
                            className="block text-gray-700 uppercase font-bold mb-2"
@@ -109,8 +134,9 @@ const Form = () => {
                 <input
                     type="submit"
                     value="Agregar paciente"
-                    className="w-full bg-indigo-600 text-white uppercase font-bold
-                    hover:bg-indigo-700 cursor-pointer transition-colors p-3"
+                    className={`w-full bg-indigo-600 text-white uppercase font-bold
+                    hover:bg-indigo-700 cursor-pointer transition-colors p-3
+                    ${error && "cursor-not-allowed"} `}
                 />
             </form>
         </div>
